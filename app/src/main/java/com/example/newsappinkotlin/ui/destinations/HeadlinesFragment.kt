@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_headlines.*
 
 class HeadlinesFragment : Fragment(), CardClickListener {
     lateinit var sharedVM: SharedViewModel
+    var count = 0
     var currentPage: Int = 1
     lateinit var recyclerViewAdapter: HeadlinesRecyclerViewAdapter
     lateinit var linearLayoutManager: LinearLayoutManager
@@ -30,7 +31,9 @@ class HeadlinesFragment : Fragment(), CardClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_headlines, container, false)
+    ): View? {
+        sharedVM = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        return inflater.inflate(R.layout.fragment_headlines, container, false)}
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,10 +49,7 @@ class HeadlinesFragment : Fragment(), CardClickListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 //        println("required activity is ${requireActivity()}")
-        println("-------------------------------------------------------------------------------------------------------------------------PAGE $currentPage")
-        sharedVM = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-        currentPage = 1
-        sharedVM.getArticles(currentPage)
+        count++
         sharedVM.getHeadlines().observe(viewLifecycleOwner, Observer { t -> viewHeadlines(t); printTitles(t) })
     }
 
@@ -79,12 +79,14 @@ class HeadlinesFragment : Fragment(), CardClickListener {
                 val firstVisibleItem = linearLayoutManager.findLastVisibleItemPosition()
 
                 if(firstVisibleItem + visibleItemsCount >= totalItems/2) {
-                    println("PAGE: $currentPage --> condition true")
+
                     newsFeedRecyclerView.removeOnScrollListener(this)
                     if(sharedVM.getHeadlines().value?.size != 0){
-                        println("PAGE: $currentPage --> add 1")
+
                         currentPage++
+                        println("called again")
                         sharedVM.getArticles(currentPage)
+
                     }
 
                 }

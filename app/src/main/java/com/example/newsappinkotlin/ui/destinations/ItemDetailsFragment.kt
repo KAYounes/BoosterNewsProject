@@ -12,6 +12,7 @@ import com.example.newsappinkotlin.R
 import com.example.newsappinkotlin.models.FullNewsModel
 import com.example.newsappinkotlin.viewmodel.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_item_details.*
+import kotlinx.android.synthetic.main.fragment_item_details.view.*
 
 class ItemDetailsFragment : Fragment() {
     lateinit var sharedVM: SharedViewModel
@@ -34,7 +35,11 @@ class ItemDetailsFragment : Fragment() {
         newsTitle.text = card.headLineTitle
         newslPublishTime.text = card.headLinePublish
         newsSource.text = card.headLineSource.name
+        if(card.headLineThumbNail == null){
+            newsDescription.text = "Visit video @ ${card.visit}"
+        }else{
         newsDescription.text = card.newsDescription
+        }
         newsContent.text = card.newsContent
     }
 

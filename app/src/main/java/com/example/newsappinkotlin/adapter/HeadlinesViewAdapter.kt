@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.newsappinkotlin.models.FullNewsModel
 import com.example.newsappinkotlin.R
 import kotlinx.android.synthetic.main.fragment_headline_card.view.*
+import kotlinx.android.synthetic.main.fragment_item_details.view.*
 
 var headlineNumber = 0
 
@@ -28,6 +29,8 @@ class HeadlinesRecyclerViewAdapter(var headLinesList: MutableList<FullNewsModel>
                 .load(headline.headLineThumbNail)
                 .error(R.drawable.yellow_globe)
                 .into(itemView.headlineThumbnail)
+
+
 
             itemView.setOnClickListener{
                 action.onCardClick(headline, adapterPosition)

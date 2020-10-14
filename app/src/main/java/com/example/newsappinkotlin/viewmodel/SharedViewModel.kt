@@ -40,6 +40,7 @@ class SharedViewModel: ViewModel() {
 
 
     fun getArticles(page: Int){
+        println("actual page: #$page")
         ApiClient.topHeadlinesResponse(page, ::shareData, ::noData)
     }
 
@@ -48,6 +49,7 @@ class SharedViewModel: ViewModel() {
     }
 
     private fun shareData(headlines: ArrayList<FullNewsModel>) {
+        println("sharing..................")
         headlinesMutLivDataStatus.value = "success"
         headlinesMutLivData.value = headlines
     }
