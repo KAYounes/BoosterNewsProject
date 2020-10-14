@@ -43,17 +43,14 @@ class HeadlinesFragment : Fragment(), CardClickListener {
         newsFeedRecyclerView.adapter = recyclerViewAdapter
         currentPage = 1
         newsFeedRecyclerView.layoutManager = linearLayoutManager
-    }
 
-    override fun onResume() {
-        super.onResume()
-        currentPage = 1
     }
 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-//        println("required activity is ${requireActivity()}")
+        println("required activity is ${requireActivity()}")
+        sharedVM = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         currentPage = 1
         sharedVM.getHeadlines().observe(viewLifecycleOwner, Observer { t -> viewHeadlines(t); printTitles(t) })
     }
@@ -72,7 +69,7 @@ class HeadlinesFragment : Fragment(), CardClickListener {
 
     private fun printTitles(list: ArrayList<FullNewsModel>){
         for (i in 0..list.size - 1){
-            println("page $currentPage-->$i = ${list[i].headLineTitle}")
+            println(">$i = ${list[i].headLineTitle}")
         }
     }
 
@@ -86,8 +83,9 @@ class HeadlinesFragment : Fragment(), CardClickListener {
                 if(firstVisibleItem + visibleItemsCount >= totalItems/2) {
                     newsFeedRecyclerView.removeOnScrollListener(this)
                         currentPage++
-                        newsFeedRecyclerView.removeOnScrollListener(this)
                         sharedVM.getArticles(currentPage)
+
+
                 }
             }
         })
