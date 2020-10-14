@@ -18,9 +18,10 @@ class ViewModel(application: Application) : AndroidViewModel(application) {
 
     }
     fun saveNews(dataModel : DataModel){
- viewModelScope.launch(Dispatchers.IO) {
+    viewModelScope.launch(Dispatchers.IO) {
      repository.addNews(dataModel)
- }
+    }
 
     }
+
 }
