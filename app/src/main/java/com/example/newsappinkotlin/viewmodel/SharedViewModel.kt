@@ -1,12 +1,15 @@
 package com.example.newsappinkotlin.viewmodel
 
 
+import android.widget.Toast
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.newsappinkotlin.Database.DataModel
 import com.example.newsappinkotlin.models.FullNewsModel
+import com.example.newsappinkotlin.network.ApiCalls
 import com.example.newsappinkotlin.network.ApiClient
+import com.example.newsappinkotlin.network.FullResponse
 import retrofit2.Call
 import retrofit2.Response
 import javax.security.auth.callback.Callback
@@ -15,7 +18,6 @@ class SharedViewModel: ViewModel() {
 
     private val headlinesMutLivData : MutableLiveData<ArrayList<FullNewsModel>> = MutableLiveData()
     private val headlinesMutLivDataStatus : MutableLiveData<String> = MutableLiveData()
-    private val savedMutLivData : MutableLiveData<DataModel> = MutableLiveData()
 
     private val headlineMutLivData : MutableLiveData<FullNewsModel> = MutableLiveData()
 
@@ -37,16 +39,8 @@ class SharedViewModel: ViewModel() {
     }
 
 
-    fun getSaved(): LiveData<DataModel>{
-        return savedMutLivData
-    }
-
-    fun clickedSaved(headline: DataModel){
-        savedMutLivData.value = headline
-    }
-
     fun getArticles(page: Int){
-        println("page sent in call: $page")
+        println("actual page: #$page")
         ApiClient.topHeadlinesResponse(page, ::shareData, ::noData)
     }
 
@@ -55,6 +49,7 @@ class SharedViewModel: ViewModel() {
     }
 
     private fun shareData(headlines: ArrayList<FullNewsModel>) {
+        println("sharing..................")
         headlinesMutLivDataStatus.value = "success"
         headlinesMutLivData.value = headlines
     }

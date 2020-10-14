@@ -36,6 +36,7 @@ object ApiClient {
                     if (response.body() == null) {
                         error.invoke("!!! response.body is NULL ${response.body()?.stat}")
                     } else {
+                        println(currentPage)
                         noError.invoke(response.body()!!.articles)
                     }
                 }

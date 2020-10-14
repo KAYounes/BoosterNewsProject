@@ -66,7 +66,11 @@ private fun insertDatatoDatabase(){
         newsTitle.text = card.headLineTitle
         newslPublishTime.text = card.headLinePublish
         newsSource.text = card.headLineSource.name
+        if(card.headLineThumbNail == null){
+            newsDescription.text = "Visit video @ ${card.visit}"
+        }else{
         newsDescription.text = card.newsDescription
+        }
         newsContent.text = card.newsContent
     }
 

@@ -16,9 +16,11 @@ import com.example.newsappinkotlin.network.ApiClient
 import com.example.newsappinkotlin.viewmodel.SharedViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
+var starting = true
+
 class MainActivity : AppCompatActivity() {
     lateinit var navController: NavController
-
+    lateinit var sharedVM: SharedViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,10 +32,10 @@ class MainActivity : AppCompatActivity() {
         bottom_nav_view.setupWithNavController(navController)
         syncNavBar()
 //        starting= false
-//        sharedVM = ViewModelProvider(this).get(SharedViewModel::class.java)
-//        sharedVM.getHeadlines().observe(this, Observer { t -> println("headlines success") })
-//        sharedVM.getStatus().observe(this, Observer { t -> println(t) })
-//        sharedVM.getArticles(1)
+        sharedVM = ViewModelProvider(this).get(SharedViewModel::class.java)
+        sharedVM.getHeadlines().observe(this, Observer { t -> println("headlines success") })
+        sharedVM.getStatus().observe(this, Observer { t -> println(t) })
+        sharedVM.getArticles(1)
 
     }
 
@@ -46,6 +48,12 @@ class MainActivity : AppCompatActivity() {
             } else {
                 bottom_nav_view.visibility = View.VISIBLE
             }
+
+//            if (dest.id == R.id.headlinesFragment) {
+//                bottom_nav_view.visibility = View.GONE
+//            } else {
+//                bottom_nav_view.visibility = View.VISIBLE
+//            }
 
         }
     }
