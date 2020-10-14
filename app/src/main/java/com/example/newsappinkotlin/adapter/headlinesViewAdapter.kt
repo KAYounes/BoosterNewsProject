@@ -29,7 +29,6 @@ class HeadlinesRecyclerViewAdapter(var headLinesList: MutableList<FullNewsModel>
             itemView.setOnClickListener{
                 action.onCardClick(headline, adapterPosition)
             }
-
         }
 
     }
