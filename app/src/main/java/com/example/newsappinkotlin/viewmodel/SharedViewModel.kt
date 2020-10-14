@@ -34,6 +34,11 @@ class SharedViewModel: ViewModel() {
         return headlineMutLivData
     }
 
+    fun clickedHeadline(headline: FullNewsModel){
+        headlineMutLivData.value = headline
+    }
+
+
     fun getArticles(page: Int){
         ApiClient.topHeadlinesResponse(1, ::shareData, ::noData)
     }

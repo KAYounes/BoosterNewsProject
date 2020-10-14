@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         syncNavBar()
 
         sharedVM = ViewModelProvider(this).get(SharedViewModel::class.java)
-        sharedVM.getHeadlines().observe(this, Observer { t -> println(t) })
+        sharedVM.getHeadlines().observe(this, Observer { t -> println("headlines success") })
         sharedVM.getStatus().observe(this, Observer { t -> println(t) })
         sharedVM.getArticles(1)
 
