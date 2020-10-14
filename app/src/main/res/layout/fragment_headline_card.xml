@@ -1,14 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".headlineCard">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="380dp"
+    android:layout_height="115dp"
+    android:layout_gravity="center_horizontal"
+    android:layout_margin="5dp"
+    android:elevation="30dp"
+    app:cardCornerRadius="20dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cardConstraintView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@drawable/blue_yellow_grad_bg"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
 
-</FrameLayout>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/HeadLineThumbNailCardView"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:cardCornerRadius="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/HeadLineThumbNail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/large_image" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/HeadLineTitle"
+            android:layout_width="235dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="Sonos stock falls after report highlights removal of its smart speakers from Apple stores - MarketWatch"
+            android:textColor="@color/MainText"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/HeadLineThumbNailCardView"
+            app:layout_constraintTop_toTopOf="@id/HeadLineThumbNailCardView" />
+
+        <TextView
+            android:id="@+id/HeadLineSource"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="edition.cnn.com • 1h"
+            android:textColor="@color/additionalText"
+            app:layout_constraintBottom_toBottomOf="@id/HeadLineThumbNailCardView"
+            app:layout_constraintStart_toEndOf="@id/HeadLineThumbNailCardView" />
+
+        <ImageView
+            android:id="@+id/popUpMenue"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/drag_menue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/HeadLineTitle" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
