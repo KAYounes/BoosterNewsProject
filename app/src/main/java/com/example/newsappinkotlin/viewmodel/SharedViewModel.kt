@@ -40,7 +40,7 @@ class SharedViewModel: ViewModel() {
 
 
     fun getArticles(page: Int){
-        ApiClient.topHeadlinesResponse(1, ::shareData, ::noData)
+        ApiClient.topHeadlinesResponse(page, ::shareData, ::noData)
     }
 
     private fun noData(reason: String) {
