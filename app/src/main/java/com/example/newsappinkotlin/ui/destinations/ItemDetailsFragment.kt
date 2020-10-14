@@ -25,7 +25,7 @@ class ItemDetailsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         sharedVM = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-        sharedVM.getHeadline().observe(requireActivity(), Observer { t -> bind(t)  })
+        sharedVM.getHeadline().observe(viewLifecycleOwner, Observer { t -> bind(t)  })
     }
 
 
