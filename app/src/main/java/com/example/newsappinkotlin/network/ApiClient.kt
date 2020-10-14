@@ -19,15 +19,15 @@ object ApiClient {
         service = retrofit.create(ApiCalls::class.java)
     }
 
-    fun callGetNews(
+    fun topHeadlinesResponse(
         currentPage: Int,
         noError: (headliens: ArrayList<FullNewsModel>) -> Unit,
-        error: () -> Unit
+        error: (reason: String) -> Unit
     ) {
-        service?.getNews(currentPage = currentPage)!!
+        service?.topHeadlines(currentPage = currentPage)!!
             .enqueue(object : retrofit2.Callback<FullResponse?> {
                 override fun onFailure(call: Call<FullResponse?>, t: Throwable) {
-                    error.invoke()
+                    error.invoke("failed to hit api")
                 }
 
                 override fun onResponse(
@@ -35,7 +35,7 @@ object ApiClient {
                     response: Response<FullResponse?>
                 ) {
                     if (response.body() == null) {
-                        error.invoke()
+                        error.invoke("response.body is NULL")
                     } else {
                         noError.invoke(response.body()!!.articles)
                     }
