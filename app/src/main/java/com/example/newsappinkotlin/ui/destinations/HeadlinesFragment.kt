@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.HeaderViewListAdapter
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -43,7 +46,7 @@ class HeadlinesFragment : Fragment(), CardClickListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 //        println("required activity is ${requireActivity()}")
-        println()
+        println("-------------------------------------------------------------------------------------------------------------------------PAGE $currentPage")
         sharedVM = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         currentPage = 1
         sharedVM.getArticles(currentPage)
@@ -64,7 +67,7 @@ class HeadlinesFragment : Fragment(), CardClickListener {
 
     private fun printTitles(list: ArrayList<FullNewsModel>){
         for (i in 0..list.size - 1){
-            println(">$i = ${list[i].headLineTitle}")
+            println("page $currentPage-->$i = ${list[i].headLineTitle}")
         }
     }
 
@@ -76,8 +79,10 @@ class HeadlinesFragment : Fragment(), CardClickListener {
                 val firstVisibleItem = linearLayoutManager.findLastVisibleItemPosition()
 
                 if(firstVisibleItem + visibleItemsCount >= totalItems/2) {
+                    println("PAGE: $currentPage --> condition true")
                     newsFeedRecyclerView.removeOnScrollListener(this)
                     if(sharedVM.getHeadlines().value?.size != 0){
+                        println("PAGE: $currentPage --> add 1")
                         currentPage++
                         sharedVM.getArticles(currentPage)
                     }
