@@ -45,7 +45,8 @@ class HeadlinesFragment : Fragment(), CardClickListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        println("required activity is ${requireActivity()}")
+//        println("required activity is ${requireActivity()}")
+        println()
         sharedVM = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         currentPage = 1
         sharedVM.getArticles(currentPage)
