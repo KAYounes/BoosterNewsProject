@@ -33,9 +33,9 @@ class MainActivity : AppCompatActivity() {
         syncNavBar()
 //        starting= false
         sharedVM = ViewModelProvider(this).get(SharedViewModel::class.java)
-        sharedVM.getHeadlines().observe(this, Observer { t -> println("headlines success") })
-        sharedVM.getStatus().observe(this, Observer { t -> println(t) })
+//        sharedVM.getStatus().observe(this, Observer { t -> println(t) })
         sharedVM.getArticles(1)
+        println("main activity call------------------------------------------")
 
     }
 
@@ -48,11 +48,10 @@ class MainActivity : AppCompatActivity() {
             } else {
                 bottom_nav_view.visibility = View.VISIBLE
             }
-
+//
 //            if (dest.id == R.id.headlinesFragment) {
-//                bottom_nav_view.visibility = View.GONE
-//            } else {
-//                bottom_nav_view.visibility = View.VISIBLE
+//                println("----------------------------------------aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+//                sharedVM.getArticles(1)
 //            }
 
         }
