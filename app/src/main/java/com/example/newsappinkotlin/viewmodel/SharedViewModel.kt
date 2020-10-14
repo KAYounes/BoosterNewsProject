@@ -18,7 +18,6 @@ class SharedViewModel: ViewModel() {
 
     private val headlinesMutLivData : MutableLiveData<ArrayList<FullNewsModel>> = MutableLiveData()
     private val headlinesMutLivDataStatus : MutableLiveData<String> = MutableLiveData()
-    private val totalNews : MutableLiveData<Int> = MutableLiveData(1)
     private val headlineMutLivData : MutableLiveData<FullNewsModel> = MutableLiveData()
 
 
@@ -34,9 +33,6 @@ class SharedViewModel: ViewModel() {
         return headlineMutLivData
     }
 
-    fun getTotalSize(): LiveData<Int>{
-        return totalNews
-    }
 
     fun clickedHeadline(headline: FullNewsModel){
         headlineMutLivData.value = headline
@@ -44,10 +40,9 @@ class SharedViewModel: ViewModel() {
 
 
     fun getArticles(page: Int){
-        println("actual page: #$page ${totalNews.value}")
-        if(page <= totalNews.value!!/2 +1){
+        println("actual page: #$page ")
         ApiClient.topHeadlinesResponse(page, ::shareData, ::noData)
-        }
+
     }
 
     private fun noData(reason: String) {
@@ -57,7 +52,6 @@ class SharedViewModel: ViewModel() {
     private fun shareData(headlines: ArrayList<FullNewsModel>, size: Int) {
         headlinesMutLivDataStatus.value = "success"
         headlinesMutLivData.value = headlines
-        totalNews.value = size
     }
 
 }

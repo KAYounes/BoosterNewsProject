@@ -48,12 +48,6 @@ class MainActivity : AppCompatActivity() {
             } else {
                 bottom_nav_view.visibility = View.VISIBLE
             }
-//
-//            if (dest.id == R.id.headlinesFragment) {
-//                println("----------------------------------------aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-//                sharedVM.getArticles(1)
-//            }
-
         }
     }
 
