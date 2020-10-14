@@ -24,6 +24,7 @@ class HeadlinesFragment : Fragment(), CardClickListener {
     lateinit var sharedVM: SharedViewModel
     var count = 0
     var currentPage: Int = 1
+    var totalPages: Int = 0
     lateinit var recyclerViewAdapter: HeadlinesRecyclerViewAdapter
     lateinit var linearLayoutManager: LinearLayoutManager
 
@@ -33,6 +34,7 @@ class HeadlinesFragment : Fragment(), CardClickListener {
         savedInstanceState: Bundle?
     ): View? {
         sharedVM = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+
         return inflater.inflate(R.layout.fragment_headlines, container, false)}
 
 
@@ -42,15 +44,14 @@ class HeadlinesFragment : Fragment(), CardClickListener {
         linearLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         newsFeedRecyclerView.adapter = recyclerViewAdapter
         newsFeedRecyclerView.layoutManager = linearLayoutManager
-
     }
 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 //        println("required activity is ${requireActivity()}")
-        count++
         sharedVM.getHeadlines().observe(viewLifecycleOwner, Observer { t -> viewHeadlines(t); printTitles(t) })
+        sharedVM.getTotalSize().observe(viewLifecycleOwner, Observer { t ->  totalPages = t/20 + 1})
     }
 
 
@@ -78,17 +79,15 @@ class HeadlinesFragment : Fragment(), CardClickListener {
                 val visibleItemsCount = linearLayoutManager.childCount
                 val firstVisibleItem = linearLayoutManager.findLastVisibleItemPosition()
 
-                if(firstVisibleItem + visibleItemsCount >= totalItems/2) {
-
+                if (firstVisibleItem + visibleItemsCount >= totalItems / 2) {
                     newsFeedRecyclerView.removeOnScrollListener(this)
-                    if(sharedVM.getHeadlines().value?.size != 0){
-
-                        currentPage++
-                        println("called again")
+                    currentPage++
+                    println("total ${totalPages} and $currentPage")
+                    if (currentPage > totalPages) {
+                        newsFeedRecyclerView.removeOnScrollListener(this)
+                        currentPage = 1
                         sharedVM.getArticles(currentPage)
-
                     }
-
                 }
             }
         })

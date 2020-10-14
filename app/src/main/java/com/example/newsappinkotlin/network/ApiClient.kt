@@ -21,7 +21,7 @@ object ApiClient {
 
     fun topHeadlinesResponse(
         currentPage: Int,
-        noError: (headlines: ArrayList<FullNewsModel>) -> Unit,
+        noError: (headlines: ArrayList<FullNewsModel>, size: Int) -> Unit,
         error: (reason: String) -> Unit
     ) {
         service.topHeadlines(currentPage = currentPage).enqueue(object : Callback<FullResponse?> {
@@ -36,8 +36,7 @@ object ApiClient {
                     if (response.body() == null) {
                         error.invoke("!!! response.body is NULL ${response.body()?.stat}")
                     } else {
-                        println(currentPage)
-                        noError.invoke(response.body()!!.articles)
+                        noError.invoke(response.body()!!.articles, response.body()!!.totalNews)
                     }
                 }
 
