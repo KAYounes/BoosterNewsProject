@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.newsappinkotlin.R
 import com.example.newsappinkotlin.adapter.CardClickListener
 import com.example.newsappinkotlin.adapter.HeadlinesRecyclerViewAdapter
@@ -21,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_headlines.*
 
 class HeadlinesFragment : Fragment(), CardClickListener {
     lateinit var sharedVM: SharedViewModel
+    var currentPage: Int = 1
     lateinit var recyclerViewAdapter: HeadlinesRecyclerViewAdapter
     lateinit var linearLayoutManager: LinearLayoutManager
 
@@ -45,7 +47,9 @@ class HeadlinesFragment : Fragment(), CardClickListener {
         super.onActivityCreated(savedInstanceState)
         println("required activity is ${requireActivity()}")
         sharedVM = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-        sharedVM.getHeadlines().observe(viewLifecycleOwner, Observer { t -> viewHeadlines(t) })
+        currentPage = 1
+        sharedVM.getArticles(currentPage)
+        sharedVM.getHeadlines().observe(viewLifecycleOwner, Observer { t -> viewHeadlines(t); printTitles(t) })
     }
 
 
@@ -55,15 +59,36 @@ class HeadlinesFragment : Fragment(), CardClickListener {
     }
 
     fun viewHeadlines(headlines: ArrayList<FullNewsModel>){
-        recyclerViewAdapter.headLinesList = headlines
+        recyclerViewAdapter.nextPage(headlines)
+        attachOnScrollListener()
     }
 
 
     private fun printTitles(list: ArrayList<FullNewsModel>){
-        for (i in 0..list.size){
+        for (i in 0..list.size - 1){
             println(">$i = ${list[i].headLineTitle}")
         }
     }
+
+    fun attachOnScrollListener(){
+        newsFeedRecyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val totalItems = linearLayoutManager.itemCount
+                val visibleItemsCount = linearLayoutManager.childCount
+                val firstVisibleItem = linearLayoutManager.findLastVisibleItemPosition()
+
+                if(firstVisibleItem + visibleItemsCount >= totalItems/2) {
+                    newsFeedRecyclerView.removeOnScrollListener(this)
+                    if(sharedVM.getHeadlines().value?.size != 0){
+                        currentPage++
+                        sharedVM.getArticles(currentPage)
+                    }
+
+                }
+            }
+        })
+    }
+
 }
 
 
