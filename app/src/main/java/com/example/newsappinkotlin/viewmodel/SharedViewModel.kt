@@ -40,6 +40,7 @@ class SharedViewModel: ViewModel() {
 
 
     fun getArticles(page: Int){
+        println("page sent in call: $page")
         ApiClient.topHeadlinesResponse(page, ::shareData, ::noData)
     }
 
