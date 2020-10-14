@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.HeaderViewListAdapter
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,7 +30,10 @@ class HeadlinesFragment : Fragment(), CardClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_headlines, container, false)
+    ): View? {
+        sharedVM = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        currentPage = 1
+        return inflater.inflate(R.layout.fragment_headlines, container, false)}
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,6 +41,7 @@ class HeadlinesFragment : Fragment(), CardClickListener {
         recyclerViewAdapter = HeadlinesRecyclerViewAdapter(mutableListOf(), this)
         linearLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         newsFeedRecyclerView.adapter = recyclerViewAdapter
+        currentPage = 1
         newsFeedRecyclerView.layoutManager = linearLayoutManager
 
     }
@@ -42,11 +49,7 @@ class HeadlinesFragment : Fragment(), CardClickListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-//        println("required activity is ${requireActivity()}")
-        println()
-        sharedVM = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         currentPage = 1
-        sharedVM.getArticles(currentPage)
         sharedVM.getHeadlines().observe(viewLifecycleOwner, Observer { t -> viewHeadlines(t); printTitles(t) })
     }
 
