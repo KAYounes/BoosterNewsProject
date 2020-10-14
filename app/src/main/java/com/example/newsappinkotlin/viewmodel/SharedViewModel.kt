@@ -6,6 +6,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.newsappinkotlin.Database.DataModel
 import com.example.newsappinkotlin.models.FullNewsModel
 import com.example.newsappinkotlin.network.ApiCalls
 import com.example.newsappinkotlin.network.ApiClient
