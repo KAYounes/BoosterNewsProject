@@ -12,13 +12,18 @@ import com.example.newsappinkotlin.models.FullNewsModel
 import com.example.newsappinkotlin.R
 import kotlinx.android.synthetic.main.fragment_headline_card.view.*
 
+var headlineNumber = 0
+
 class HeadlinesRecyclerViewAdapter(var headLinesList: MutableList<FullNewsModel>?, private var clickListener: CardClickListener): RecyclerView.Adapter<HeadlinesRecyclerViewAdapter.HeadLineHolder>(){
+
 
     class HeadLineHolder(headlineCard: View): RecyclerView.ViewHolder(headlineCard){
 
         fun onBind(headline: FullNewsModel, action: CardClickListener){
+
             itemView.headlineTitle.text = headline.headLineTitle.split(" - ")[0]
             itemView.headlineSource.text = "${getSource(headline.headLineSource?.name)} • ${getHoursAgo(headline.headLinePublish)}h"
+            itemView.headlineNumber.text = "# $headlineNumber"
             Glide.with(itemView)
                 .load(headline.headLineThumbNail)
                 .error(R.drawable.yellow_globe)
@@ -44,6 +49,7 @@ class HeadlinesRecyclerViewAdapter(var headLinesList: MutableList<FullNewsModel>
 
     override fun onBindViewHolder(holder: HeadLineHolder, position: Int) {
         var headline = headLinesList!![position]
+        headlineNumber = position + 1
         holder.onBind(headline,clickListener)
     }
 
@@ -51,7 +57,6 @@ class HeadlinesRecyclerViewAdapter(var headLinesList: MutableList<FullNewsModel>
         this.headLinesList?.addAll(headlines)
         notifyItemRangeChanged(this.headLinesList!!.size, (headLinesList!!.size) -1)
     }
-
 
 }
 
