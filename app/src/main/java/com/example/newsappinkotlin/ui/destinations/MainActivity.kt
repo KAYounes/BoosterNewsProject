@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
@@ -11,11 +13,12 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.newsappinkotlin.R
 import com.example.newsappinkotlin.models.FullNewsModel
 import com.example.newsappinkotlin.network.ApiClient
+import com.example.newsappinkotlin.viewmodel.SharedViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var navController: NavController
-
+    lateinit var sharedVM: SharedViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,16 +31,10 @@ class MainActivity : AppCompatActivity() {
         bottom_nav_view.setupWithNavController(navController)
         syncNavBar()
 
-        ApiClient.topHeadlinesResponse(1, ::shareData, ::noData)
-    }
-
-
-    private fun noData(reason: String) {
-        Toast.makeText(this, "Reason → $reason", Toast.LENGTH_SHORT).show()
-    }
-
-
-    private fun shareData(headlines: ArrayList<FullNewsModel>) {
+        sharedVM = ViewModelProvider(this).get(SharedViewModel::class.java)
+        sharedVM.getHeadlines().observe(this, Observer { t -> println(t) })
+        sharedVM.getStatus().observe(this, Observer { t -> println(t) })
+        sharedVM.getArticles(1)
 
     }
 

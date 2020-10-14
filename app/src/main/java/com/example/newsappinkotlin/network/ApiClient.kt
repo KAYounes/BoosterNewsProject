@@ -1,8 +1,8 @@
 package com.example.newsappinkotlin.network
 
-import android.widget.Toast
 import com.example.newsappinkotlin.models.FullNewsModel
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -21,13 +21,12 @@ object ApiClient {
 
     fun topHeadlinesResponse(
         currentPage: Int,
-        noError: (headliens: ArrayList<FullNewsModel>) -> Unit,
+        noError: (headlines: ArrayList<FullNewsModel>) -> Unit,
         error: (reason: String) -> Unit
     ) {
-        service?.topHeadlines(currentPage = currentPage)!!
-            .enqueue(object : retrofit2.Callback<FullResponse?> {
+        service.topHeadlines(currentPage = currentPage).enqueue(object : Callback<FullResponse?> {
                 override fun onFailure(call: Call<FullResponse?>, t: Throwable) {
-                    error.invoke("failed to hit api")
+                    error.invoke("!!! failed to hit api --- page $currentPage --- error is $t")
                 }
 
                 override fun onResponse(
@@ -35,7 +34,7 @@ object ApiClient {
                     response: Response<FullResponse?>
                 ) {
                     if (response.body() == null) {
-                        error.invoke("response.body is NULL")
+                        error.invoke("!!! response.body is NULL ${response.body()?.stat}")
                     } else {
                         noError.invoke(response.body()!!.articles)
                     }
