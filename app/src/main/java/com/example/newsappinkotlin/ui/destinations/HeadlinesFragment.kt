@@ -45,13 +45,17 @@ class HeadlinesFragment : Fragment(), CardClickListener {
         super.onActivityCreated(savedInstanceState)
         println("required activity is ${requireActivity()}")
         sharedVM = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-        sharedVM.getHeadlines().observe(viewLifecycleOwner, Observer { t -> printTitles(t) })
+        sharedVM.getHeadlines().observe(viewLifecycleOwner, Observer { t -> viewHeadlines(t) })
     }
 
 
     override fun onCardClick(card: FullNewsModel, position: Int) {
         findNavController().navigate(R.id.action_headlinesFragment_to_itemDetailsFragment)
         sharedVM.clickedHeadline(card)
+    }
+
+    fun viewHeadlines(headlines: ArrayList<FullNewsModel>){
+        recyclerViewAdapter.headLinesList = headlines
     }
 
 
