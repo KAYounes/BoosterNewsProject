@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             tools:src="@drawable/large_image" />
 
     </androidx.cardview.widget.CardView>
@@ -44,7 +44,7 @@
         android:textColor="@color/MainText"
         android:textSize="14dp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@id/arrowMenue"
+        app:layout_constraintEnd_toStartOf="@id/arrowMenueTop"
         app:layout_constraintStart_toEndOf="@+id/thumbnailCard"
         app:layout_constraintTop_toTopOf="@id/thumbnailCard" />
 
@@ -58,14 +58,23 @@
         android:textColor="@color/additionalText"
         app:layout_constraintBottom_toBottomOf="@id/thumbnailCard"
         app:layout_constraintEnd_toEndOf="@id/headlineTitle"
-        app:layout_constraintStart_toEndOf="@id/thumbnailCard" />
+        app:layout_constraintStart_toStartOf="@id/headlineTitle"/>
 
     <ImageView
-        android:id="@+id/arrowMenue"
+        android:id="@+id/arrowMenueTop"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:src="@drawable/drag_menue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/headlineTitle" />
+
+    <ImageView
+        android:id="@+id/arrowMenueBottom"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/drag_menue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/arrowMenueTop"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
