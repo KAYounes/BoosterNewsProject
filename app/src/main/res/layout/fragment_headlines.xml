@@ -10,7 +10,7 @@
         android:id="@+id/newsFeedRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingRight="-2dp"
+        android:paddingEnd="-2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:listitem="@layout/fragment_headline_card" />

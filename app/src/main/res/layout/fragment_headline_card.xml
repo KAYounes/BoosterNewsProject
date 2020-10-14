@@ -8,9 +8,9 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:background="@drawable/round_purple_yellow_grad_bg"
-    android:paddingLeft="8dp"
+    android:paddingStart="10dp"
     android:paddingTop="15dp"
-    android:paddingRight="10dp"
+    android:paddingEnd="8dp"
     android:paddingBottom="15dp">
 
     <androidx.cardview.widget.CardView
@@ -36,8 +36,8 @@
         android:id="@+id/headlineTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="8dp"
         android:ellipsize="end"
         android:maxLines="3"
         android:text="Sonos stock falls after report highlights removal of its smart speakers from Apple stores - MarketWatch"
@@ -52,7 +52,7 @@
         android:id="@+id/headlineSource"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
         android:maxLines="1"
         android:text="edition.cnn.com • 1h"
         android:textColor="@color/additionalText"
