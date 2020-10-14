@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var navController: NavController
-    lateinit var sharedVM: SharedViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,11 +29,11 @@ class MainActivity : AppCompatActivity() {
 
         bottom_nav_view.setupWithNavController(navController)
         syncNavBar()
-
-        sharedVM = ViewModelProvider(this).get(SharedViewModel::class.java)
-        sharedVM.getHeadlines().observe(this, Observer { t -> println("headlines success") })
-        sharedVM.getStatus().observe(this, Observer { t -> println(t) })
-        sharedVM.getArticles(1)
+//        starting= false
+//        sharedVM = ViewModelProvider(this).get(SharedViewModel::class.java)
+//        sharedVM.getHeadlines().observe(this, Observer { t -> println("headlines success") })
+//        sharedVM.getStatus().observe(this, Observer { t -> println(t) })
+//        sharedVM.getArticles(1)
 
     }
 
@@ -47,6 +46,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 bottom_nav_view.visibility = View.VISIBLE
             }
+
         }
     }
 
